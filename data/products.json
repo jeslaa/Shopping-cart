@@ -1,0 +1,19 @@
+{
+    "products": [
+        {
+            "item": "item01",
+            "productName": "Computer",
+            "price": 12000
+        },
+        {
+            "item": "item02",
+            "productName": "Iphone",
+            "price": 9000
+        },
+        {
+            "item": "item03",
+            "productName": "Keyboard",
+            "price": 1300
+        }
+    ]
+}
