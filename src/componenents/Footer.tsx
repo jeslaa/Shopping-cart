@@ -1,22 +1,32 @@
 import useCart from "../hooks/useCart"
+import '../styles/footer.scss'
 
 type Props = {
-  viewCart: boolean
+  showCart: boolean
 }
 
-const Footer = ({ viewCart }: Props) => {
+// Defining the Footer component
+const Footer = ({ showCart }: Props) => {
+
+  //Using useCart to get cart information
   const { allItems, totalPrice } = useCart()
 
-  const year: number = new Date().getFullYear()
+  
 
-  const pageContent = viewCart
-  ? <p>Shopping Cart &copy; {year}</p>
+  const pageContent = showCart
+  ? <p className="year"></p>
   : (
     <>
-      <p>Total Items: {allItems}</p>
-      <p>Total Price: {totalPrice}</p>
-      <p>Shopping Cart &copy; {year}</p>
-    </>
+    <div className="footer-cart">
+      <div className="cart-info">
+      <p className="total-items">Total Items: {allItems}</p> 
+      <p className="total-price">Total Price: {totalPrice}</p>
+      <p className="year">Shopping Cart &copy; 2023</p>
+      </div>
+   
+    </div>
+      
+    </> // Displaying total items and price^
   )
 
   const content = (
@@ -24,7 +34,7 @@ const Footer = ({ viewCart }: Props) => {
       {pageContent}
     </footer>
   )
-  return content
+  return content // Return the footer content
 }
 
 export default Footer

@@ -1,54 +1,35 @@
 import { ReactElement, createContext, useState, useEffect } from "react"
 
-export type ProductType = {
-    item: string,
+export type ProductType = { //Defining ProductType
+    cartItem: string,
     productName: string
     price: number
 }
 
-const initialState: ProductType[] = []
-
-// //Creating an array for ProductType
-// const initialState: ProductType[] = [
-//     {
-//         "item": "item01",
-//         "productName": "Computer",
-//         "price": 12000
-//     },
-//     {
-//         "item": "item02",
-//         "productName": "Iphone",
-//         "price": 9000
-//     },
-//     {
-//         "item": "item03",
-//         "productName": "Keyboard",
-//         "price": 1300
-//     }
-// ]
+const initialState: ProductType[] = [] //Product is initially an empty array
 
 export type UseProductsContext = { products: ProductType[] }
 
 const initialContextState: UseProductsContext = { products: [] }
 
-const ProductsContext = createContext<UseProductsContext>(initialContextState)
+const ProductsContext = createContext<UseProductsContext>(initialContextState) //Creating context for products
 
-type ChildrenType = { children?: ReactElement | ReactElement[] }
+type ChildrenType = { children?: ReactElement | ReactElement[] } // Defining the type for children components
 
 export const ProductsProvider = ({ children }: ChildrenType): ReactElement => {
-    const [products, setProducts] = useState<ProductType[]>(() => {
-        // Try to load data from local storage
+    const [products, setProducts] = useState<ProductType[]>(() => { // Use state to store and manage product data
+        // Trying to load data from local storage
         const savedProducts = localStorage.getItem('products');
         return savedProducts ? JSON.parse(savedProducts) : initialState;
     });
 
     useEffect(() => {
-        const fetchProducts = async (): Promise<ProductType[]> => {
+        const fetchProducts = async (): Promise<ProductType[]> => { //Fetching data from json database
             try {
-                const data = await fetch('http://localhost:3500/products').then(res => res.json());
+                const data = await fetch('http://localhost:3500/products').then(res => res.json()); 
 
                 // Save the fetched data to local storage
-                localStorage.setItem('products', JSON.stringify(data));
+                localStorage.setItem('products', JSON.stringify(data)); //Saving the data
 
                 return data;
             } catch (error) {
@@ -57,7 +38,7 @@ export const ProductsProvider = ({ children }: ChildrenType): ReactElement => {
             }
         }
 
-        fetchProducts().then(products => setProducts(products));
+        fetchProducts().then(products => setProducts(products)); // Fetching products and updates the state
     }, []);
 
     return (

@@ -1,7 +1,7 @@
 {
     "products": [
         {
-            "sku": "item01",
+            "item": "item01",
             "productName": "Computer",
             "price": 12000
         },
