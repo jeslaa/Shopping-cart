@@ -1,17 +1,17 @@
 {
     "products": [
         {
-            "item": "item01",
+            "sku": "item01",
             "productName": "Computer",
             "price": 12000
         },
         {
-            "item": "item02",
+            "sku": "item02",
             "productName": "Iphone",
             "price": 9000
         },
         {
-            "item": "item03",
+            "sku": "item03",
             "productName": "Keyboard",
             "price": 1300
         }

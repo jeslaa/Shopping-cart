@@ -1,4 +1,4 @@
-import React, { Children, ReactElement, createContext, useState, useEffect } from "react"
+import { ReactElement, createContext, useState, useEffect } from "react"
 
 export type ProductType = {
     item: string,
@@ -33,28 +33,38 @@ const initialContextState: UseProductsContext = { products: [] }
 
 const ProductsContext = createContext<UseProductsContext>(initialContextState)
 
-type ChildrenType = { children?: ReactElement | ReactElement[]} 
+type ChildrenType = { children?: ReactElement | ReactElement[] }
 
-export const ProductsProvider = ({ children }: ChildrenType ): ReactElement => {
-    const [ products, setProducts] = useState<ProductType[]> (initialState)
+export const ProductsProvider = ({ children }: ChildrenType): ReactElement => {
+    const [products, setProducts] = useState<ProductType[]>(() => {
+        // Try to load data from local storage
+        const savedProducts = localStorage.getItem('products');
+        return savedProducts ? JSON.parse(savedProducts) : initialState;
+    });
 
     useEffect(() => {
         const fetchProducts = async (): Promise<ProductType[]> => {
-            const data = await fetch('http://localhost:3500/products').then(res => {
-                return res.json()
-            }).catch(err => {
-                if (err instanceof Error) console.log(err.message)
-            })
-        return data
+            try {
+                const data = await fetch('http://localhost:3500/products').then(res => res.json());
+
+                // Save the fetched data to local storage
+                localStorage.setItem('products', JSON.stringify(data));
+
+                return data;
+            } catch (error) {
+                console.error(error);
+                return [];
+            }
         }
-        fetchProducts().then(products => setProducts(products))
-    }, [])
+
+        fetchProducts().then(products => setProducts(products));
+    }, []);
 
     return (
         <ProductsContext.Provider value={{ products }}>
-            { children }
+            {children}
         </ProductsContext.Provider>
-    )
+    );
 }
 
 export default ProductsContext

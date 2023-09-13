@@ -1,13 +1,13 @@
 import { ReactElement, createContext, useMemo, useReducer } from "react"
 
-export type CartItem = {
-    cItem: string,
+export type CartProduct = {
+    sku?: string,
     productName: string,
     price: number,
-    quantity: number
+    qaunt: number
 }
 
-type CartState = { cart: CartItem[] }
+type CartState = { cart: CartProduct[] }
 
 const intitialCartState: CartState = { cart: [] }
 
@@ -22,7 +22,7 @@ export type ReducerActionType = typeof REDUCER_ACTION_TYPE
 
 export type ReducerAction = {
     type: string,
-    payload?: CartItem,
+    payload?: CartProduct,
 
 }
 
@@ -33,23 +33,23 @@ const reducer = (state: CartState, action: ReducerAction):
             if (!action.payload) {
                 throw new Error('ADD action payload is missing')
             }
-            const { cItem, productName, price } = action.payload
+            const { sku, productName, price } = action.payload
 
-            const filteredCart: CartItem[] = state.cart.filter(item => item.cItem !== cItem)
+            const filteredCart: CartProduct[] = state.cart.filter(item => item.sku !== sku)
 
-            const itemExist: CartItem | undefined = state.cart.find(item => item.cItem === cItem)
+            const itemExist: CartProduct | undefined = state.cart.find(item => item.sku === sku)
 
-            const quantity: number = itemExist ? itemExist.quantity + 1 : 1
+            const qaunt: number = itemExist ? itemExist.qaunt + 1 : 1
 
-            return { ...state, cart: [...filteredCart, { cItem, productName, price, quantity }] }
+            return { ...state, cart: [...filteredCart, { sku, productName, price, qaunt }] }
         }
         case REDUCER_ACTION_TYPE.REMOVE: {
             if (!action.payload) {
                 throw new Error('REMOVE action payload is missing')
             }
-            const { cItem } = action.payload
+            const { sku } = action.payload
 
-            const filteredCart: CartItem[] = state.cart.filter(item => item.cItem !== cItem)
+            const filteredCart: CartProduct[] = state.cart.filter(item => item.sku !== sku)
 
             return { ...state, cart: [...filteredCart] }
         }
@@ -58,17 +58,17 @@ const reducer = (state: CartState, action: ReducerAction):
                 throw new Error('QUANTITY action payload is missing')
             }
 
-            const { cItem, quantity } = action.payload
+            const { sku, qaunt } = action.payload
 
-            const itemExist: CartItem | undefined = state.cart.find(item => item.cItem === cItem)
+            const itemExist: CartProduct | undefined = state.cart.find(item => item.sku === sku)
 
             if (!itemExist) {
                 throw new Error('Item needs to exist to updtate quantity')
             }
 
-            const updatedItem: CartItem = { ...itemExist, quantity }
+            const updatedItem: CartProduct = { ...itemExist, qaunt }
 
-            const filteredCart: CartItem[] = state.cart.filter(item => item.cItem !== cItem)
+            const filteredCart: CartProduct[] = state.cart.filter(item => item.sku !== sku)
 
             return { ...state, cart: [...filteredCart, updatedItem] }
         }
@@ -87,18 +87,18 @@ const useCartContext = (intitialCartState: CartState) => {
         return REDUCER_ACTION_TYPE
     }, [])
 
-    const allItems: number = state.cart.reduce((previousValue, cartItem) => {
-        return previousValue + cartItem.quantity
+    const allItems: number = state.cart.reduce((previousValue, CartProduct) => {
+        return previousValue + CartProduct.qaunt
     }, 0)
 
     const totalPrice = new Intl.NumberFormat('sv-se', { style: 'currency', currency: 'SEK' }).format(
-        state.cart.reduce((previousValue, cartItem) => {
-            return previousValue + (cartItem.quantity * cartItem.price)
+        state.cart.reduce((previousValue, CartProduct) => {
+            return previousValue + (CartProduct.qaunt * CartProduct.price)
         }, 0))
 
     const cart = state.cart.sort((a, b) => {
-        const itemA = Number(a.cItem.slice(-2))
-        const itemB = Number(b.cItem.slice(-2))
+        const itemA = Number(a.sku?.slice(-2))
+        const itemB = Number(b.sku?.slice(-2))
         return itemA - itemB
     })
 
@@ -122,7 +122,7 @@ export const CartProvider = ({ children }: ChildrenType): ReactElement => {
     return (
         <CartContext.Provider
             value={useCartContext(intitialCartState)} >
-                { children}
+            {children}
         </CartContext.Provider>
     )
 }
