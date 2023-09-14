@@ -25,7 +25,7 @@ const Cart = () => {
           return (
             <div className="card">
                 <CartTotal
-              key={item.cartItem}
+              key={item.sku}
               item={item}
               dispatch={dispatch}
               REDUCER_ACTIONS={REDUCER_ACTIONS}

@@ -1,21 +1,20 @@
-import Header from "./componenents/Header"
-import Footer from "./componenents/Footer"
-import Cart from "./componenents/Cart"
-import ProductList from "./componenents/ProductList"
+import Header from "../src/componenents/Header"
+import Footer from "../src/componenents/Footer"
+import Cart from "../src/componenents/Cart"
+import ProductList from "../src/componenents/ProductList"
 import { useState } from "react"
 
-
 function App() {
-  const [showCart, setShowCart] = useState<boolean>(false) // Initializing showCart state with a default value of false
+  const [viewCart, setViewCart] = useState<boolean>(false)
 
-  const pageContent = showCart ? <Cart /> : <ProductList /> // Determining the content based on the showCart state 
+  const pageContent = viewCart ? <Cart /> : <ProductList />
 
   const content = (
     <>
-      <Header showCart={showCart} setShowCart={setShowCart} />
+      <Header viewCart={viewCart} setViewCart={setViewCart} />
       {pageContent}
-      <Footer showCart={showCart} /> 
-    </> //Rendering footer with showCart prop
+      <Footer viewCart={viewCart} />
+    </>
   )
 
   return content

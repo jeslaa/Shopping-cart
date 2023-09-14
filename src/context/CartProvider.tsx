@@ -2,10 +2,11 @@ import { ReactElement, createContext, useMemo, useReducer } from "react"
 
 //Defining the props
 export type CartProduct = {
-    cartItem?: string,
+    sku?: string,
     productName: string,
     price: number,
     qaunt: number
+    image?: string
 }
 
 type CartState = { cart: CartProduct[] } //Defining the initial state
@@ -34,23 +35,23 @@ const reducer = (state: CartState, action: ReducerAction):
             if (!action.payload) {
                 throw new Error('ADD action payload is missing')
             }
-            const { cartItem, productName, price } = action.payload
+            const { sku, productName, price } = action.payload
 
-            const filteredCart: CartProduct[] = state.cart.filter(item => item.cartItem !== cartItem)
+            const filteredCart: CartProduct[] = state.cart.filter(item => item.sku !== sku)
 
-            const doesItemExist: CartProduct | undefined = state.cart.find(item => item.cartItem === cartItem)
+            const doesItemExist: CartProduct | undefined = state.cart.find(item => item.sku === sku)
 
             const qaunt: number = doesItemExist ? doesItemExist.qaunt + 1 : 1 //Calculating the quantity
 
-            return { ...state, cart: [...filteredCart, { cartItem, productName, price, qaunt }] } // Returning updated cart
+            return { ...state, cart: [...filteredCart, { sku, productName, price, qaunt }] } // Returning updated cart
         }
         case REDUCER_ACTION_TYPE.REMOVE: { //Handling remove
             if (!action.payload) {
                 throw new Error('REMOVE action payload is missing')
             }
-            const { cartItem } = action.payload
+            const { sku } = action.payload
 
-            const filteredCart: CartProduct[] = state.cart.filter(item => item.cartItem !== cartItem)
+            const filteredCart: CartProduct[] = state.cart.filter(item => item.sku !== sku)
 
             return { ...state, cart: [...filteredCart] }
         }
@@ -59,9 +60,9 @@ const reducer = (state: CartState, action: ReducerAction):
                 throw new Error('QUANTITY action payload is missing')
             }
 
-            const { cartItem, qaunt } = action.payload
+            const { sku, qaunt } = action.payload
 
-            const doesItemExist: CartProduct | undefined = state.cart.find(item => item.cartItem === cartItem)
+            const doesItemExist: CartProduct | undefined = state.cart.find(item => item.sku === sku)
 
             if (!doesItemExist) {
                 throw new Error('Item needs to exist to updtate quantity')
@@ -69,7 +70,7 @@ const reducer = (state: CartState, action: ReducerAction):
             
             const updatedItem: CartProduct = { ...doesItemExist, qaunt } // Create an updated item with the new quantity
 
-            const filteredCart: CartProduct[] = state.cart.filter(item => item.cartItem !== cartItem)
+            const filteredCart: CartProduct[] = state.cart.filter(item => item.sku !== sku)
 
             return { ...state, cart: [...filteredCart, updatedItem] } // Return updated cart state
         }
@@ -97,9 +98,9 @@ const useCartContext = (intitialCartState: CartState) => { // Creating a custom 
             return previousValue + (CartProduct.qaunt * CartProduct.price)
         }, 0))
 
-    const cart = state.cart.sort((a, b) => { // Sort the cart items by cartItem
-        const itemA = Number(a.cartItem?.slice(-2))
-        const itemB = Number(b.cartItem?.slice(-2))
+    const cart = state.cart.sort((a, b) => { // Sort the cart items by sku
+        const itemA = Number(a.sku?.slice(-2))
+        const itemB = Number(b.sku?.slice(-2))
         return itemA - itemB
     })
 

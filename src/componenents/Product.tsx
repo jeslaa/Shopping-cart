@@ -1,7 +1,6 @@
 import { ProductType } from "../context/ProductsProvider"
 import { ReducerActionType, ReducerAction } from "../context/CartProvider"
 import { ReactElement } from "react"
-import iphoneImg from '../images/iphone.jpg'
 import '../styles/product.scss'
 
 type PropsType = {
@@ -22,7 +21,7 @@ const Product = ({ product, dispatch, REDUCER_ACTIONS, inCart }: PropsType)
     const content =
         <article className="product">
             <h2> {product.productName}</h2>
-            <img src={iphoneImg} alt={product.productName} className="product-img" />
+            <img src={ product.image } alt={product.productName} className="product-img" />
             <p>{new Intl.NumberFormat('sv-SE', { style: 'currency', currency: 'SEK' })
             .format(product.price)}{productInCart}</p>
             <button onClick={onAddToCart} className="add-btn">Add to Cart</button>
