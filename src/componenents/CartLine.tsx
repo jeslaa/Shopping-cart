@@ -2,7 +2,7 @@ import { ChangeEvent, ReactElement } from 'react'
 import { CartProduct } from "../context/CartProvider"
 import { ReducerAction } from "../context/CartProvider"
 import { ReducerActionType } from "../context/CartProvider"
-import iphoneImg from '../images/iphone.jpg'
+import iphoneImg from "../../public/iphone.jpg"
 
 //Defining props
 type Props = {
@@ -10,6 +10,7 @@ type Props = {
     dispatch: React.Dispatch<ReducerAction>, // Defining the dispatch function
     REDUCER_ACTIONS: ReducerActionType
 }
+
 
 const CartTotal = ({item, dispatch, REDUCER_ACTIONS}: Props) => {
 

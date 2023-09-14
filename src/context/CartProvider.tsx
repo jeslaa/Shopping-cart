@@ -6,6 +6,7 @@ export type CartProduct = {
     productName: string,
     price: number,
     qaunt: number
+    image?: string
 }
 
 type CartState = { cart: CartProduct[] } //Defining the initial state

@@ -4,6 +4,7 @@ export type ProductType = { //Defining ProductType
     cartItem: string,
     productName: string
     price: number
+    image: string
 }
 
 const initialState: ProductType[] = [] //Product is initially an empty array
