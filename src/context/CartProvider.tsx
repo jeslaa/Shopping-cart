@@ -5,7 +5,7 @@ export type CartProduct = {
     sku?: string,
     productName: string,
     price: number,
-    qaunt: number
+    qaunt: number,
     image?: string
 }
 
