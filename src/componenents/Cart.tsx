@@ -23,9 +23,9 @@ const Cart = () => {
       <ul>
         {cart.map(item => {
           return (
-            <div className="card">
+            <div className="card" key={item.productName}>
                 <CartTotal
-              key={item.sku}
+              key={item.productName}
               item={item}
               dispatch={dispatch}
               REDUCER_ACTIONS={REDUCER_ACTIONS}

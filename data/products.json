@@ -7,7 +7,7 @@
             "image": "public/pc.jpg"
         },
         {
-            "item": "item02",
+            "sku": "item02",
             "productName": "Keyboard",
             "price": 1300,
             "image": "public/keyboard.jpg"

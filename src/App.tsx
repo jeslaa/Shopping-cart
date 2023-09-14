@@ -5,9 +5,9 @@ import ProductList from "../src/componenents/ProductList"
 import { useState } from "react"
 
 function App() {
-  const [viewCart, setViewCart] = useState<boolean>(false)
+  const [viewCart, setViewCart] = useState<boolean>(false) // Initializing showCart state with a default value of false
 
-  const pageContent = viewCart ? <Cart /> : <ProductList />
+  const pageContent = viewCart ? <Cart /> : <ProductList /> // Determining the content based on the showCart state 
 
   const content = (
     <>

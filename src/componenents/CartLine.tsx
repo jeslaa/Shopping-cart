@@ -2,7 +2,7 @@ import { ChangeEvent, ReactElement } from 'react'
 import { CartProduct } from "../context/CartProvider"
 import { ReducerAction } from "../context/CartProvider"
 import { ReducerActionType } from "../context/CartProvider"
-import iphoneImg from "../../public/iphone.jpg"
+// import iphoneImg from "../../public/iphone.jpg"
 
 //Defining props
 type Props = {
@@ -44,7 +44,7 @@ const CartTotal = ({item, dispatch, REDUCER_ACTIONS}: Props) => {
         const content = (
             <li className='cart-item'>
                 <div className='cart'>
-                <img src={iphoneImg} alt={item.productName} />
+                <img src={item.image} alt={item.productName} />
                 <div className='Item-name'>{item.productName}</div>
                 <div className='price'>{new Intl.NumberFormat('se-SV', //Number formatting and setting the currency to SEK
                 { style: 'currency', currency: 'SEK'}).format(item.price)}</div>

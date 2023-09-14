@@ -11,10 +11,10 @@ const ProductList = () => {
 
   if (products?.length) { //If there is products map them out
     pageContent = products.map(product => {
-      const inCart: boolean = cart.some(item => item.cartItem === product.cartItem) // Checking if the product is already in the cart
+      const inCart: boolean = cart.some(item => item.sku === product.sku) // Checking if the product is already in the cart
 
       return (
-        <Product key={product.cartItem} 
+        <Product key={product.sku} 
         product={product}
         dispatch= {dispatch}
         REDUCER_ACTIONS={REDUCER_ACTIONS}
