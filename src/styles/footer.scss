@@ -1,8 +1,4 @@
-.footer-cart{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 99vw;
+
     
     .cart-info{
         background-color: rgb(185, 185, 185);
@@ -17,6 +13,11 @@
         margin-top: 5px;
         
     }
+    .footer-cart{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 99vw;
 }
 
 .year{

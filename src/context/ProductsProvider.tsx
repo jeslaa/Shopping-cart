@@ -1,10 +1,10 @@
 import { ReactElement, createContext, useState, useEffect } from "react"
 
 export type ProductType = { //Defining ProductType
-    cartItem: string,
+    sku?: string,
     productName: string
     price: number
-    image: string
+    image?: string
 }
 
 const initialState: ProductType[] = [] //Product is initially an empty array
