@@ -6,7 +6,7 @@ export type CartProduct = {
     productName: string,
     price: number,
     qaunt: number,
-    image?: string
+    // image?: string
 }
 
 type CartState = { cart: CartProduct[] } //Defining the initial state
@@ -98,7 +98,7 @@ const useCartContext = (intitialCartState: CartState) => { // Creating a custom 
             return previousValue + (CartProduct.qaunt * CartProduct.price)
         }, 0))
 
-    const cart = state.cart.sort((a, b) => { // Sort the cart items by sku
+    const cart = state.cart.sort((a, b) => { // Sort the cart items by id
         const itemA = Number(a.sku?.slice(-2))
         const itemB = Number(b.sku?.slice(-2))
         return itemA - itemB

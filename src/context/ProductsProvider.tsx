@@ -29,7 +29,6 @@ export const ProductsProvider = ({ children }: ChildrenType): ReactElement => {
             try {
                 const data = await fetch('http://localhost:3500/products').then(res => res.json()); 
 
-                // Save the fetched data to local storage
                 localStorage.setItem('products', JSON.stringify(data)); //Saving the data
 
                 return data;

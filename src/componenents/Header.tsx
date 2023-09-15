@@ -1,16 +1,27 @@
-import Nav from "./Nav"
+// import { useState } from "react"
 import useCart from "../hooks/useCart"
 import '../styles/navbar.scss'
+import { useNavigate } from "react-router-dom"
 
-type Props = {
-    viewCart: boolean, // Prop to show/hide the cart
-    setViewCart: React.Dispatch<React.SetStateAction<boolean>> // Function for setting the showCart state
+// type Props = {
+//     viewCart: boolean, // Prop to show/hide the cart
+//     setViewCart: React.Dispatch<React.SetStateAction<boolean>> // Function for setting the showCart state
 
-}
+// }
 
-const Header = ({viewCart, setViewCart}: Props)  => {
+const Header = ()  => {
+    const navigate = useNavigate();
+
     //Getting cart data
     const { allItems, totalPrice } = useCart()
+
+    const handleToggleCart = () =>{
+        navigate('/cart')
+    }
+    
+    const handleToggleBack = () =>{
+        navigate('/')
+    }
 
     const content = (
         <header className="header">
@@ -20,8 +31,10 @@ const Header = ({viewCart, setViewCart}: Props)  => {
                     <p className="total-items">Total Items: {allItems} </p>
                     <p className="total-price">Total Price: {totalPrice} </p>
                 </div>
+                <button className="" onClick={handleToggleCart}>To cart</button>
+                <br /> <br />
+                <button className="" onClick={handleToggleBack}>Go back</button>
             </div>
-            <Nav viewCart={viewCart} setViewCart={setViewCart}></Nav>
         </header>
     )
   return content //Returning content for header
