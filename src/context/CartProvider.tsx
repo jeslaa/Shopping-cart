@@ -13,7 +13,7 @@ type CartState = { cart: CartProduct[] } //Defining the initial state
 
 const intitialCartState: CartState = { cart: [] }
 
-const REDUCER_ACTION_TYPE = { // Defining action types for the reducer
+const REDUCER_ACTION_TYPE : any = { // Defining action types for the reducer
     ADD: "ADD",
     REMOVE: "REMOVE",
     QUANTITY: "QUANTITY",

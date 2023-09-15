@@ -3,12 +3,6 @@ import useCart from "../hooks/useCart"
 import '../styles/navbar.scss'
 import { useNavigate } from "react-router-dom"
 
-// type Props = {
-//     viewCart: boolean, // Prop to show/hide the cart
-//     setViewCart: React.Dispatch<React.SetStateAction<boolean>> // Function for setting the showCart state
-
-// }
-
 const Header = ()  => {
     const navigate = useNavigate();
 

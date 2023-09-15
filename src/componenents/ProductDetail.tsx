@@ -18,7 +18,7 @@ const ProductDetail: React.FC = () => {
     <div className='product-detail'>
       <img src={iphoneImg} alt={product.productName} />
       <div className='product-detail-title'>{product.productName}</div>
-      <div className='product-detail-description'>Price: ${product.price.toFixed(2)}</div>
+      <div className='product-detail-description'>Price: {product.price.toFixed(2)} kr</div>
     </div>
   );
 };
