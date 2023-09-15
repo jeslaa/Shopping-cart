@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import ProductsContext, { ProductType } from '../context/ProductsProvider'; // Make sure to import your context and ProductType
+import ProductsContext, { ProductType } from '../context/ProductsProvider';
+import iphoneImg from "../../public/iphone.jpg"
 
 const ProductDetail: React.FC = () => {
   const { sku } = useParams<{ sku: string }>();
@@ -15,10 +16,9 @@ const ProductDetail: React.FC = () => {
 
   return (
     <div className='product-detail'>
-      <img src={product.image} alt={product.productName} />
+      <img src={iphoneImg} alt={product.productName} />
       <div className='product-detail-title'>{product.productName}</div>
       <div className='product-detail-description'>Price: ${product.price.toFixed(2)}</div>
-      {/* Add more details as needed */}
     </div>
   );
 };
