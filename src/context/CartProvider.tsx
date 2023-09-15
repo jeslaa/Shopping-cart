@@ -6,15 +6,19 @@ export type CartProduct = {
     productName: string,
     price: number,
     qaunt: number,
-    // image?: string
+    image?: string
 }
 
 type CartState = { cart: CartProduct[] } //Defining the initial state
 
-const intitialCartState: CartState = { cart: [] }
+const initialCartState: CartState = {
+    cart: localStorage.getItem('cart')
+        ? JSON.parse(localStorage.getItem('cart') as string)
+        : [],
+};
 
-const REDUCER_ACTION_TYPE : any = { // Defining action types for the reducer
-    ADD: "ADD",
+const REDUCER_ACTION_TYPE = { // Defining action types for the reducer
+    ADD: "ADD", 
     REMOVE: "REMOVE",
     QUANTITY: "QUANTITY",
     SUBMIT: "SUBMIT"
@@ -43,42 +47,47 @@ const reducer = (state: CartState, action: ReducerAction):
 
             const qaunt: number = doesItemExist ? doesItemExist.qaunt + 1 : 1 //Calculating the quantity
 
+            localStorage.setItem('cart', JSON.stringify([...filteredCart, { sku, productName, price, qaunt }]));
             return { ...state, cart: [...filteredCart, { sku, productName, price, qaunt }] } // Returning updated cart
-        }
+
+    }
         case REDUCER_ACTION_TYPE.REMOVE: { //Handling remove
-            if (!action.payload) {
-                throw new Error('REMOVE action payload is missing')
-            }
-            const { sku } = action.payload
+    if (!action.payload) {
+        throw new Error('REMOVE action payload is missing')
+    }
+    const { sku } = action.payload
 
-            const filteredCart: CartProduct[] = state.cart.filter(item => item.sku !== sku)
+    const filteredCart: CartProduct[] = state.cart.filter(item => item.sku !== sku)
 
-            return { ...state, cart: [...filteredCart] }
-        }
+    localStorage.setItem('cart', JSON.stringify([...filteredCart]));
+    return { ...state, cart: [...filteredCart] }
+}
         case REDUCER_ACTION_TYPE.QUANTITY: { // Handling the quantity and if updated
-            if (!action.payload) {
-                throw new Error('QUANTITY action payload is missing')
-            }
+    if (!action.payload) {
+        throw new Error('QUANTITY action payload is missing')
+    }
 
-            const { sku, qaunt } = action.payload
+    const { sku, qaunt } = action.payload
 
-            const doesItemExist: CartProduct | undefined = state.cart.find(item => item.sku === sku)
+    const doesItemExist: CartProduct | undefined = state.cart.find(item => item.sku === sku)
 
-            if (!doesItemExist) {
-                throw new Error('Item needs to exist to updtate quantity')
-            }
-            
-            const updatedItem: CartProduct = { ...doesItemExist, qaunt } // Create an updated item with the new quantity
+    if (!doesItemExist) {
+        throw new Error('Item needs to exist to updtate quantity')
+    }
 
-            const filteredCart: CartProduct[] = state.cart.filter(item => item.sku !== sku)
+    const updatedItem: CartProduct = { ...doesItemExist, qaunt } // Create an updated item with the new quantity
 
-            return { ...state, cart: [...filteredCart, updatedItem] } // Return updated cart state
-        }
+    const filteredCart: CartProduct[] = state.cart.filter(item => item.sku !== sku)
+
+    localStorage.setItem('cart', JSON.stringify([...filteredCart, updatedItem]));
+    return { ...state, cart: [...filteredCart, updatedItem] } // Return updated cart state
+}
         case REDUCER_ACTION_TYPE.SUBMIT: {
-            return { ...state, cart: [] } //Clearing cart when submitting
-        }
+            localStorage.removeItem('cart');
+    return { ...state, cart: [] } //Clearing cart when submitting
+}
         default:
-            throw new Error('Reducer action type not recongized')
+throw new Error('Reducer action type not recongized')
     }
 }
 
@@ -109,7 +118,7 @@ const useCartContext = (intitialCartState: CartState) => { // Creating a custom 
 
 export type UseCartContext = ReturnType<typeof useCartContext>
 
-const inititalCartContextState: UseCartContext = { // Define the initial state for CartContext
+const inititalCartContextState: UseCartContext = { // Defining the initial state for CartContext
     dispatch: () => { },
     REDUCER_ACTIONS: REDUCER_ACTION_TYPE,
     allItems: 0,
@@ -124,7 +133,7 @@ type ChildrenType = { children?: ReactElement | ReactElement[] } // Define the t
 export const CartProvider = ({ children }: ChildrenType): ReactElement => { // Creating a CartProvider component to wrap app and provide cart context
     return (
         <CartContext.Provider
-            value={useCartContext(intitialCartState)} >
+            value={useCartContext(initialCartState)} >
             {children}
         </CartContext.Provider>
     )

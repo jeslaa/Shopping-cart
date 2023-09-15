@@ -1,9 +1,8 @@
-import { ChangeEvent, ReactElement, useEffect } from 'react'
+import { ChangeEvent, ReactElement } from 'react'
 import { CartProduct } from "../context/CartProvider"
 import { ReducerAction } from "../context/CartProvider"
 import { ReducerActionType } from "../context/CartProvider"
-import keyboardImg from "../../public/keyboard.jpg"
-import { useLocalStorage } from "../hooks/cartHook";
+import placeHolderImg from "../../public/keyboard.jpg"
 
 //Defining props
 type Props = {
@@ -16,13 +15,7 @@ type Props = {
 
 const CartTotal = ({item, dispatch, REDUCER_ACTIONS}: Props) => {
 
-    const [cartData, setCartData] = useLocalStorage<CartProduct[]>("cartData", []);
     const totalPrice: number = (item.qaunt * item.price)
-
-    useEffect(() => {
-        // Save the updated cartData to localStorage
-        setCartData(cartData);
-      }, [cartData, setCartData]);
 
     // Setting the highest quantiity to 20 in the scroll list
     const highestQuant: number = 20 > item.qaunt ? 20 : item.qaunt 
@@ -54,7 +47,7 @@ const CartTotal = ({item, dispatch, REDUCER_ACTIONS}: Props) => {
         const content = (
             <li className='cart-item'>
                 <div className='cart'>
-                <img src={keyboardImg} alt={item.productName} />
+                <img src={item.image || placeHolderImg} alt={item.productName} />
                 <div className='Item-name'>{item.productName}</div>
                 <div className='price'>{new Intl.NumberFormat('se-SV', //Number formatting and setting the currency to SEK
                 { style: 'currency', currency: 'SEK'}).format(item.price)}</div>

@@ -4,13 +4,13 @@
             "sku": "item01",
             "productName": "Computer",
             "price": 12000,
-            "image": "public/pc.jpg"
+            "image": "/pc.jpg"
         },
         {
             "sku": "item02",
             "productName": "Keyboard",
             "price": 1300,
-            "image": "public/keyboard.jpg"
+            "image": "/keyboard.jpg"
         }
     ]
 }
