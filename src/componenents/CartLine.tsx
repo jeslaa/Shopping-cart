@@ -9,6 +9,7 @@ type Props = {
     item: CartProduct,
     dispatch: React.Dispatch<ReducerAction>, // Defining the dispatch function
     REDUCER_ACTIONS: ReducerActionType
+    image?: string
 }
 
 
@@ -41,7 +42,8 @@ const CartTotal = ({item, dispatch, REDUCER_ACTIONS}: Props) => {
             payload: item, 
         })
 
-        
+        console.log(item.image)
+        console.log(item.productName)
     
          // Defining the content for each cart item
         const content = (

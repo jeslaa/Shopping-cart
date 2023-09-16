@@ -8,11 +8,12 @@ export type ProductType = { //Defining ProductType
     price: number
     image?: string
 }
-
+  
   const ProductCard: React.FC<ProductType> = ({ sku, productName, price, image }) => {
+    //Link to the product card
   return (
-    <div className='product-card'>
-      <Link to={`/details/${sku}`}>
+    <div className='product-card'> 
+      <Link to={`/details/${sku}`}> 
           <img
             src={image}
             alt={productName}

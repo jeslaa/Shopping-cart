@@ -9,7 +9,7 @@ const Header = ()  => {
     //Getting cart data
     const { allItems, totalPrice } = useCart()
 
-    const handleToggleCart = () =>{
+    const handleToggleCart = () =>{ //Navigate to cart
         navigate('/cart')
     }
     

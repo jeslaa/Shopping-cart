@@ -1,4 +1,3 @@
-// import useCart from "../hooks/useCart"
 import '../styles/footer.scss'
 
 type Props = {
@@ -13,7 +12,7 @@ const Footer = ({ viewCart }: Props) => {
   : (
     <>
       
-    </> // Displaying total items and price^
+    </>
   )
 
   const content = (

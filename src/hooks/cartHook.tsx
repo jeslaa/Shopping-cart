@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react"
 
 export function useLocalStorage<T>(key: string, initialValue: T | (() => T)) {
-  // Initialize the state using useState hook
+  // Initialize state using useState hook
   const [value, setValue] = useState<T>(() => {
     
     // Try to retrieve the value from local storage based on the provided key
     const jsonValue = localStorage.getItem(key)
 
-    // If a value is found in local storage, parse it and use it as the initial value
+    // If value is found in local storage, parse it and use it as the initial value
     if (jsonValue != null) return JSON.parse(jsonValue)
 
-    // If a value is found in local storage, parse it and use it as the initial value
+    // If an initial value is specified as a function, execute to retrieve the initial value
     if (typeof initialValue === "function") {
       return (initialValue as () => T)()
     } else {
@@ -19,11 +19,10 @@ export function useLocalStorage<T>(key: string, initialValue: T | (() => T)) {
     }
   })
 
-  // Use the useEffect hook to listen for changes in the value or key, and update local storage
+  // Utilizes the useEffect hook to monitor changes in the value or key and refreshes the local storage
   useEffect(() => {
     localStorage.setItem(key, JSON.stringify(value))
   }, [key, value])
 
-  // Return the current value and a function to update it as an array
   return [value, setValue] as [typeof value, typeof setValue]
 }

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import ProductsContext, { ProductType } from '../context/ProductsProvider';
+import ProductsContext from '../context/ProductsProvider';
+import '../styles/details.scss'
 
 const ProductDetail: React.FC = () => {
   const { sku } = useParams<{ sku: string }>();
@@ -16,8 +17,8 @@ const ProductDetail: React.FC = () => {
   return (
     <div className='product-detail'>
       <img src={product.image} alt={product.productName} />
-      <div className='product-detail-title'>{product.productName}</div>
-      <div className='product-detail-description'>Price: {product.price.toFixed(2)} kr</div>
+      <div className='product-detail-title'> <p>{product.productName}</p></div>
+      <div className='product-detail-description'> <p>Price: {product.price.toFixed(2)} kr</p></div>
     </div>
   );
 };
